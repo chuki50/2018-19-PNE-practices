@@ -1,0 +1,21 @@
+Client-Server Model
+Client: request
+Server: response to many clients
+
+---
+---
+---
+---
+
+The client and the server are connected through the internet (wireless).
+Many isolated computers are connected to each other through the internet. They are subdivided in networks.
+We can identify the machine through the network interface, which has an IP address.
+The IP address changes when you change network.
+
+ifconfig
+ip cellphone: 10.0.54.72
+ip lab computer 212.128.253.64 time = 0.064 ms
+time w/ other = 0.548 ms
+time w/ mobile = 230 ms
+
+url: identifying a computer interface for humans
