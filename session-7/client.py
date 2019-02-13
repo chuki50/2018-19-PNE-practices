@@ -7,10 +7,10 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 print("Socket created!")
 
-PORT = 8080
-IP = "212.128.253.84"
+PORT = 8081
+IP = '212.128.253.84'
 
-s.connect((IP,PORT))
+s.connect((IP, PORT))
 
 s.send(str.encode("crying"))
 
