@@ -2,6 +2,8 @@ class Seq:
     # We are going to use this class for the sequences of DNA.
     # 1. Class initialization.
     def __init__(self, strbase):
+        print("New sequence created!")
+
         self.strbase = strbase
 
     # 2. Length of the sequence.
@@ -41,9 +43,13 @@ class Seq:
         percentage = round(100.0 * count(self, base) / len(self.strbase))
         return base, percentage
 
+
 s1 = Seq("ATTCATCC")
+l1 = s1.length()
+compl1 = s1.complementary()
+bc1 = s1.count("A"), s1.count("G"), s1.count("C"), s1.count("T")
 str1 = s1.strbase
 
 print("Sequence 1: {}".format(str1))
-print("    Length: {}".format(str1.len()))
-print("    Bases count: {}".format(str1.count()))
+print("    Length: {}".format(l1))
+print("    Bases count: {}".format(bc1))

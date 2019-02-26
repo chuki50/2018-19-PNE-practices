@@ -9,10 +9,6 @@ class Seq1:
         return len(self.strbases)
 
 
-class Gene(Seq):
-    """This class is derived from the Seq. All the objects of class Gene will inherit the methods from Seq class"""
-    pass
-
 
 s1 = Seq1("ATTCATCC")
 l1 = s1.len()
