@@ -44,10 +44,10 @@ class Seq:
         return base, percentage
 
 
-s1 = Seq("ATTCATCC")
+s1 = Seq(input("Introduce the sequence: "))
 l1 = s1.length()
 compl1 = s1.complementary()
-bc1 = s1.count("A"), s1.count("G"), s1.count("C"), s1.count("T")
+bc1 = s1.count('A'), s1.count('C'), s1.count('G'), s1.count('T')
 str1 = s1.strbase
 
 print("Sequence 1: {}".format(str1))
