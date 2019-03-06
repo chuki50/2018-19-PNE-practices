@@ -1,3 +1,11 @@
+def countbases(sequence, base):
+    counter = 0
+    for x in range(len(sequence)):
+        if sequence[x] == base:
+                counter += 1
+    return counter
+
+
 class Seq:
     # We are going to use this class for the sequences of DNA.
     # 1. Class initialization.
@@ -12,7 +20,7 @@ class Seq:
 
     # 3. Complementary sequence, following the pairs C <-> G and T <-> A.
     def complementary(self):
-        notcompl = str(self)
+        notcompl = str(self.strbase)
         compl = ''
         for i in range(len(notcompl)):
             if notcompl[i] == 'A':
@@ -27,29 +35,20 @@ class Seq:
 
     # 4. Reverse sequence.
     def reverse(self):
-        reverse_sequence = str(self[::-1])
-        return reverse_sequence
+        reverse_seq = self.strbase[::-1]
+        return reverse_seq
 
     # 5. Base counter
     def count(self, base):
         counter = 0
-        for strbase in range(len(self.strbase)):
-            if strbase == base:
+        for x in range(len(self.strbase)):
+            if self.strbase[x] == base:
                 counter += 1
-        return base, counter
+        bcount = str("{}:{}".format(base, counter))
+        return bcount
 
     # 6. Base percentage
     def perc(self, base):
-        percentage = round(100.0 * count(self, base) / len(self.strbase))
-        return base, percentage
-
-
-s1 = Seq(input("Introduce the sequence: "))
-l1 = s1.length()
-compl1 = s1.complementary()
-bc1 = s1.count('A'), s1.count('C'), s1.count('G'), s1.count('T')
-str1 = s1.strbase
-
-print("Sequence 1: {}".format(str1))
-print("    Length: {}".format(l1))
-print("    Bases count: {}".format(bc1))
+        percentage = round(100.0 * countbases(self.strbase, base) / len(self.strbase))
+        bperc = str("{}:{}%".format(base, percentage))
+        return bperc
