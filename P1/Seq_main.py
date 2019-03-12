@@ -12,7 +12,7 @@ for i in range(len(s1)):
 s2 = input("Second sequence: ").upper()
 for i in range(len(s2.upper())):
     while s2[i] not in ['A', 'C', 'G', 'T']:
-        s2 = input("Sorry, one base isn't valid. Introduce the first sequence again: ")
+        s2 = input("Sorry, one base isn't valid. Introduce the second sequence again: ")
 
 s1 = Seq(s1)
 s2 = Seq(s2)

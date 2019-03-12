@@ -6,7 +6,7 @@ chat_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print("Socket created!")
 
 PORT = 8080
-IP = "10.3.53.54"
+IP = "10.3.50.228"
 
 chat_socket.connect((IP, PORT))
 
