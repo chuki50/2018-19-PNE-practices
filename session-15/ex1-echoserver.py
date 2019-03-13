@@ -11,10 +11,12 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
     def do_GET(self):
         # Print the request line
+        path = self.path
+        message_recieved = str(path)[10:]
         termcolor.cprint(self.requestline, 'green')
 
         # Open the form.html file
-        f = open("form.html", 'r')
+        f = open("ex1-echorequest.html", 'r')
         contents = f.read()
 
         # Generating the response message
@@ -28,7 +30,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Send the response message
         self.wfile.write(str.encode(contents))
 
-        return
+        return message_recieved
 
 
 # ------------------------
@@ -50,5 +52,3 @@ with socketserver.TCPServer(("", PORT), Handler) as httpd:
         print("")
         print("Stopped by the user")
         httpd.server_close()
-
-print("Echo server Stopped")
