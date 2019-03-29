@@ -1,0 +1,8 @@
+{
+  "Firstname": "Jared",
+  "Lastname": "??",
+  "Age": 19,
+  "phoneNumber": [
+    {"number": "911", "type": "police"},
+    {"number": "420", "type": "weed"}]
+}

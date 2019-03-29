@@ -1,0 +1,8 @@
+We are using the HTTP protocol. The web server has information that can be requested.
+It responds with HTML, text, images, etc.
+It is information for the using, but there are also data that is only available for the applications.
+The format in which this data is stored is JSON.
+There are 2 types of clients:
+    - Browser: ask the web server for info HTTP
+    - Python Client: ask for info HTTP from the database.
+
