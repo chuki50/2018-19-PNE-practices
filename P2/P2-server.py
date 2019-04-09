@@ -2,7 +2,7 @@ import socket
 from P1.Seq import Seq
 
 # We use our current IP and we choose a PORT for our server.
-IP = '192.168.1.49'
+IP = '10.3.53.128'
 PORT = 8080
 MAX_OPEN_REQUESTS = 5
 number_con = 0

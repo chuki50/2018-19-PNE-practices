@@ -1,37 +1,41 @@
 import socket
 
 # IP and PORT of our server
-IP = "192.168.2.216"
-PORT = 8080
-
+IP = "10.3.53.128"
+PORT = 8081
 MAX_OPEN_REQUEST = 5
 
-def process_client(cs):
 
-    # Reading the message from the client
-    msg = cs.recv(2048).decode("utf-8")
-    msg = msg.split('/')
+def process_client(clientsocket):
+    # Reading the message from the client.
+    print("Hello")
+    msg = clientsocket.recv(2048).decode("utf-8")
+    msg = msg.split('\n')
     first_line = msg[0]
-    operation_lines = msg[1:]
-
-    answer_list = []
 
     null_first = False
     invalid_first = False
 
     if first_line == "":
         null_first = True
-
-    while not null_first:
-        for x in range(len(first_line)):
-            if first_line[x] not in ["A","T","G","C"]:
+        msg_alive = "ALIVE"
+        clientsocket.send(str.encode(msg_alive))
+    else:
+        for base in range(len(first_line)):
+            if first_line[base] not in ["A", "T", "G", "C"]:
                 invalid_first = True
                 break
-            else:
-                continue
+            else: continue
 
+    # We define each of the operations that the client can ask.
+    if invalid_first:
+        msg_invalid = "One of the bases of your sequence is invalid"
+        clientsocket.send(str.encode(msg_invalid))
 
-    while not invalid_first:
+    elif not null_first and not invalid_first:
+        operation_lines = msg[1:]
+        answer_list = []
+
         for x in range(len(operation_lines)):
             if operation_lines[x] == "len":
                 length = len(first_line)
@@ -118,27 +122,26 @@ def process_client(cs):
             else:
                 print("One option was found invalid")
 
-    answer_list = str(answer_list)
-    msg_send = answer_list.replace(",", "\n")
+        print(answer_list)
+        answer_list = str(answer_list)
+        msg_send = answer_list.replace(",", "\n").strip("[").strip("]")
+        clientsocket.send(str.encode(msg_send))
 
-    cs.send(str.encode(msg_send))
     # Close the socket
-    cs.close()
+    clientsocket.close()
 
 
 # Create a socket for connecting to the clients
 p3socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 p3socket.bind((IP, PORT))
-
 p3socket.listen(MAX_OPEN_REQUEST)
 
 print("Socket ready at: {}".format(p3socket))
 
 while True:
     print("Waiting for connections at: {}, {}".format(IP, PORT))
-    (clientsocket, address) = p3socket.accept()
+    (c3socket, address) = p3socket.accept()
 
     print("Attending connections from client: {}".format(address))
-    process_client(clientsocket)
-    clientsocket.close()
+    process_client(c3socket)
