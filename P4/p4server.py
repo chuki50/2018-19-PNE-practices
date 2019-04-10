@@ -2,7 +2,7 @@ import socket
 import termcolor
 
 IP = "10.3.53.32"
-PORT = 8080
+PORT = 8081
 
 MAX_OPEN_REQUESTS = 5
 
@@ -16,8 +16,8 @@ def process_client(cs):
 
     # Print the received message, for debugging
     print()
-    print("Request message: ")
-    termcolor.cprint(msg, 'green')
+    print("Request message: ", msg)
+
     content = ""
     with open("index.html",'r') as f:
         for line in f:
