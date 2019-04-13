@@ -2,7 +2,7 @@ import socket
 import termcolor
 
 IP = "10.3.53.32"
-PORT = 8081
+PORT = 8080
 
 MAX_OPEN_REQUESTS = 5
 
@@ -16,10 +16,25 @@ def process_client(cs):
 
     # Print the received message, for debugging
     print()
-    print("Request message: ", msg)
+    print("Request message: ")
+    termcolor.cprint(msg, 'yellow')
+    msg_lines = msg.splitlines()
+    first_line = msg_lines[0]
+
+    file_name = "index.html"
+
+    if first_line[4:6] == "/ ":
+        file_name = "index.html"
+    elif first_line[4:8] == "/blue":
+        file_name = "blue.html"
+    elif first_line[4:8] == "/pink":
+        file_name = "pink.html"
+    elif first_line[4:8] == "/error":
+        file_name = "error.html"
 
     content = ""
-    with open("index.html",'r') as f:
+
+    with open(file_name,'r') as f:
         for line in f:
             content += line
 
