@@ -2,7 +2,7 @@ import http.server
 import socketserver
 import termcolor
 
-PORT = 8009
+PORT = 8000
 
 
 class TestHandler(http.server.BaseHTTPRequestHandler):
@@ -11,13 +11,12 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         print("GET received! Request line:")
         termcolor.cprint("  " + self.requestline, 'cyan')
-
         print("  Command: " + self.command)
-
         print("  Path: " + self.path)
 
-        path = self.requestline
+        path = self.path
         req = self.requestline
+
         # In order to know what the user wants to do, we define the 4 options.
         if path == "/" or path == "/index.html":
             file_name = "index.html"
@@ -43,7 +42,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             content = f.read()
             f.close()
 
-        self.send_header('Content-Type', 'text/plain')
+        self.send_response(200)  # -- Status line: OK!
+
+        self.send_header('Content-Type', 'text/html')
         self.send_header('Content-Length', len(str.encode(content)))
         self.end_headers()
 
