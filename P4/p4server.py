@@ -1,66 +1,81 @@
 import socket
 import termcolor
 
-IP = "10.3.53.45"
+IP = "172.72.15.169"
 PORT = 8081
 
 MAX_OPEN_REQUESTS = 5
 
 
 def process_client(cs):
-    """Process the client request.
-    Parameters:  cs: socket for communicating with the client"""
 
     # Read client message. Decode it as a string
     msg = cs.recv(2048).decode("utf-8")
 
-    # Print the received message, for debugging
+    # Print the received message
     print()
     print("Request message: ")
-    termcolor.cprint(msg, 'yellow')
+    termcolor.cprint(msg, 'green')
+
+    # Now we want the first line of the message, so we can get the path.
     msg_lines = msg.splitlines()
     first_line = msg_lines[0]
+    termcolor.cprint(first_line, 'cyan')
 
+    # In order to know what the user wants to do, we define the 4 options.
     if first_line.startswith("GET /") or first_line.startswith("GET  "):
         file_name = "index.html"
         f = open(file_name, 'r')
         content = f.read()
         f.close()
+        status_line = "HTTP/1.1 200 ok\r\n"
+
+        header = "Content-Type: text/html\r\n"
+        header += "Content-Length: {} \r\n".format(len(str.encode(content)))
+        response_msg = status_line + header + "\r\n" + content
+
     elif first_line.startswith("GET /blue.html"):
         file_name = "blue.html"
         f = open(file_name, 'r')
         content = f.read()
         f.close()
+        status_line = "HTTP/1.1 200 ok\r\n"
+
+        header = "Content-Type: text/html\r\n"
+        header += "Content-Length: {} \r\n".format(len(str.encode(content)))
+        response_msg = status_line + header + "\r\n" + content
 
     elif first_line.startswith("GET /pink.html"):
         file_name = "pink.html"
         f = open(file_name, 'r')
         content = f.read()
         f.close()
+        status_line = "HTTP/1.1 200 ok\r\n"
+
+        header = "Content-Type: text/html\r\n"
+        header += "Content-Length: {} \r\n".format(len(str.encode(content)))
+        response_msg = status_line + header + "\r\n" + content
+
     else:
         file_name = "error.html"
         f = open(file_name, 'r')
         content = f.read()
         f.close()
+        status_line = "HTTP/1.1 200 ok\r\n"
 
-    status_line = "HTTP/1.1 200 ok\r\n"
-
-    header = "Content-Type: text/html\r\n"
-    header += "Content-Length: {} \r\n".format(len(str.encode(content)))
-
-    response_msg = status_line + header + "\r\n" + content
+        header = "Content-Type: text/html\r\n"
+        header += "Content-Length: {} \r\n".format(len(str.encode(content)))
+        response_msg = status_line + header + "\r\n" + content
 
     cs.send(str.encode(response_msg))
+
     # Close the socket
     cs.close()
 
 
 # MAIN PROGRAM
 
-# create an INET, STREAMing socket
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-# Bind the socket to the IP and PORT
 serversocket.bind((IP, PORT))
 
 # Configure the server sockets
