@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>P6 FORM</title>
+  </head>
+  <body>
+    <h3>Sequence analyzer</h3>
 
-</body>
+    <form method="get">
+      Introduce your sequence:  <input type="text" name="seq">
+      <br><br>
+      Length of the sequence:
+      <input type="checkbox" name="Length">
+        <br> Choose operation:
+      <select name="operation">
+        <option value="count">Count</option>
+        <option value="perc">Percentage</option>
+      </select>
+      <br><br>
+      Base selected:
+      <input type="radio" name="base" value="A" checked> A
+      <input type="radio" name="base" value="C"> C
+      <input type="radio" name="base" value="T"> T
+      <input type="radio" name="base" value="G"> G
+      <br><br>
+
+       <br>
+        <input type="submit"/>
+    </form>
+
+  </body>
 </html>
