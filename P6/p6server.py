@@ -3,9 +3,9 @@
 import http.server
 import socketserver
 import termcolor
-
+socketserver.TCPServer.allow_reuse_address = True
 # Define the Server's port
-PORT = 8001
+PORT = 8000
 
 
 class TestHandler(http.server.BaseHTTPRequestHandler):
@@ -22,6 +22,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             f = open('p6page.html', 'r')
             contents = f.read()
             f.close()
+
+            self.send_response(200)
             self.send_header('Content-Type', 'text/html')
             self.send_header('Content-Length', len(str.encode(contents)))
             self.end_headers()
@@ -42,12 +44,13 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             path_div = path.replace('/?', '')
             data = str(path_div).split('&')
 
+            # First, we are going to work on the DNA sequence. We are going to obtain it from the first unit in data.
             seq_r = data[0].split('=')
             seq = str(seq_r[1])
-            invalid = False
-            operation = ""
-            base = ""
 
+            invalid = False
+
+            # We don't want invalid bases, so we are going to run our sequence through a loop to detect non-valid bases.
             for base in range(len(seq)):
                 if seq[base] not in ["A", "T", "G", "C"]:
                     invalid = True
@@ -63,7 +66,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 base_r = data[3].split('=')
                 base = str(base_r[1])
 
-            elif len(data) == 3:
+            else:
                 operation_r = data[1].split('=')
                 operation = str(operation_r[1])
                 base_r = data[2].split('=')
@@ -134,15 +137,27 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
                     operation_html = "<p>The number of {} bases is: {} </p>".format(base, count)
 
-            cont1 = cont + len_html + operation_html
-            cont2 = """</body>
-</html>"""
-            contents = cont1 + cont2
+                cont1 = cont + "\r\n" + len_html + "\r\n" + operation_html + "\r\n"
+                cont2 = """</body>
+                        </html>"""
+                response = cont1 + cont2
 
-            self.send_header('Content-Type', 'text/html')
-            self.send_header('Content-Length', len(str.encode(contents)))
-            self.end_headers()
-            self.wfile.write(str.encode(contents))
+                self.send_response(200)
+                self.send_header('Content-Type', 'text/html')
+                self.send_header('Content-Length', len(str.encode(response)))
+                self.end_headers()
+                self.wfile.write(str.encode(response))
+
+            if invalid:
+                f = open("error.html",'r')
+                response = f.read()
+                f.close()
+
+                self.send_response(200)
+                self.send_header('Content-Type', 'text/html')
+                self.send_header('Content-Length', len(str.encode(response)))
+                self.end_headers()
+                self.wfile.write(str.encode(response))
 
         return
 
