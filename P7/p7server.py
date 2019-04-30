@@ -23,37 +23,33 @@ data = r.read().decode("utf-8")
 information = json.loads(data)
 
 # Our parameters are 'seq','query','desc','molecule','id' and 'version', in that order. We'll only use the first one.
-main_sequence = information['seq']
-
 # Now we are going to be answering the questions:
     #1.- How many bases are there in the FRAT1 gene?
     #2.- How many T bases are there in the FRAT1 gene?
     #3.- Which base is the most popular in the FRAT1 gene? What is its percentage?
     #4.- Calculate the percentage of all the bases in the FRAT1 gene
 
-num_bases = len(main_sequence)
-
 counterA = 0
 counterC = 0
 counterG = 0
 counterT = 0
 
-for x in range(len(main_sequence)):
-    if main_sequence[x] == "A":
+for x in range(len(information['seq'])):
+    if information['seq'][x] == "A":
         counterA += 1
-    elif main_sequence[x] == "C":
+    elif information['seq'][x] == "C":
         counterC += 1
-    elif main_sequence[x] == "G":
+    elif information['seq'][x] == "G":
         counterG += 1
-    elif main_sequence[x] == "T":
+    elif information['seq'][x] == "T":
         counterT += 1
 counter_list = [counterA, counterC, counterG, counterT]
 popular_base = max(counter_list)
 
-percA = round(100 * counterA / num_bases)
-percC = round(100 * counterC / num_bases)
-percG = round(100 * counterG / num_bases)
-percT = round(100 * counterT / num_bases)
+percA = round(100 * counterA / len(information['seq']))
+percC = round(100 * counterC / len(information['seq']))
+percG = round(100 * counterG / len(information['seq']))
+percT = round(100 * counterT / len(information['seq']))
 
 popular_perc = float()
 base = str()
@@ -72,7 +68,7 @@ elif popular_base == counterT:
     base = 'T'
 
 termcolor.cprint('FRAT1 gene:', 'cyan')
-print(' Number of bases in the FRAT1 gene: {}'.format(num_bases))
+print(' Number of bases in the FRAT1 gene: {}'.format(len(information['seq'])))
 print(' Number of T bases: {}'.format(counterT))
 print(' Most popular base: {} with {} bases ({}%)'.format(base, popular_base, popular_perc))
 print(' Percentages of bases:')
