@@ -52,7 +52,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             # We don't want invalid bases, so we are going to run our sequence through a loop to detect non-valid bases.
             for base in range(len(seq)):
-                if seq[base] not in ["A", "T", "G", "C"]:
+                if seq.upper()[base] not in ["A", "T", "G", "C"]:
                     invalid = True
                     break
                 else:
